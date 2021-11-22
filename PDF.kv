@@ -59,7 +59,10 @@
         orientation: "vertical"
         Label:
             id: error_label
-            text: 'An error occured'     
+            text: 'An error occured'
+        Button:
+            text: "Cancel"
+            on_release: root.cancel()   
 
 <LoadDialog>:
     BoxLayout:

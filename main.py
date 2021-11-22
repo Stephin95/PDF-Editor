@@ -85,7 +85,7 @@ class Secondary_window(Screen):
 
         self.dismiss_popup()
 
-    pass
+
 
 
 class LoadDialog(FloatLayout):
