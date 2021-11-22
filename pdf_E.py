@@ -29,11 +29,15 @@ class PdfEditor:
     def write_pdf(self,finalpdf_obj, file_name='sample.pdf'):
         with Path(file_name).open(mode="wb") as output_file:
             finalpdf_obj.write(output_file)
-    def pdf_merge(self):
+    def pdf_merge(self,savepath=''):
+        
         pdf_merger = PdfFileMerger()
         for f in self.path_list:
             pdf_merger.append(str(f))
-        self.write_pdf(finalpdf_obj=pdf_merger,file_name=str(f.name)+'merged.pdf')
+        savepath=savepath+'\\'+str(f.name)
+        self.write_pdf(finalpdf_obj=pdf_merger,file_name=savepath)
+        print('Pdfs merged succesfully')
+        return True
         # with Path("full_pdf.pdf").open(mode="wb") as output_file:
         #     print('all the pdf files merged')
         #     pdf_merger.write(output_file)

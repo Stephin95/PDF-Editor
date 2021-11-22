@@ -14,6 +14,7 @@ contains a root Widget.
 # import kivy
 import os
 from kivy.app import App
+from pathlib import Path
 # from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -22,7 +23,7 @@ from kivy.properties import ObjectProperty
 # from kivy.factory import Factory
 from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
-
+from pdf_E import PdfEditor
 
 class Screen_manager(ScreenManager):
     pass
@@ -38,6 +39,7 @@ class Secondary_window(Screen):
     # text_input = ObjectProperty(None)
     description_label = ObjectProperty()
     selection_label = ObjectProperty()
+
     def show_error(self,errormsg="Error occured"):
         content= ErrorDialog(cancel=self.dismiss_popup)
         self._popup = Popup(title="Error", content=content, size_hint=(0.9, 0.9))
@@ -56,7 +58,7 @@ class Secondary_window(Screen):
         self._popup = Popup(title="Save file", content=content, size_hint=(0.9, 0.9))
         self._popup.open()
 
-    def load(self, path, filename):
+    def load(self, path, filename,auto_close=False):
         if not filename:
             print('please select a valid file')
             self.show_error(errormsg='file not found')
@@ -67,24 +69,44 @@ class Secondary_window(Screen):
             self.selection_label.text=file_path
         else:
             self.selection_label.text=self.selection_label.text+'\n'+file_path
+        if auto_close:
+            self.dismiss_popup()
 
         
         # with open(os.path.join(path, filename[0])) as stream:
         #     self.text_input.text = stream.read()
 
-        self.dismiss_popup()
+        
 
     def save(self, path):
+        
+        # path=Path(path)
         print(path)
+        path_list=self.selection_label.text.split('\n')
+        print(path_list)
+        path_lib_path= list(map(Path,path_list))
+        print('splitted path', )
+        p= PdfEditor(path_list=path_lib_path)
+        p.pdf_merge(savepath=path)
+        self.dismiss_popup()
+        self.show_completed()
+
+
         # print(os.path.join(path, filename))
         # with open(os.path.join(path, filename), "w") as stream:
             # stream.write(
             #     self.text_input.text
             # )  # considering output file as text for now.
 
-        self.dismiss_popup()
+        
 
+    def show_completed(self):
+        content= CompletedDialog(cancel=self.dismiss_popup)
+        self._popup = Popup(title="Completed", content=content, size_hint=(0.9, 0.9))
+        self._popup.open()
 
+class CompletedDialog(FloatLayout):
+    cancel = ObjectProperty(None)
 
 
 class LoadDialog(FloatLayout):
@@ -100,6 +122,9 @@ class SaveDialog(FloatLayout):
 
 class ErrorDialog(FloatLayout):
     cancel = ObjectProperty(None)
+
+class Imagetopdf_screen(Secondary_window):
+    pass
 
 
 class PDFApp(App):

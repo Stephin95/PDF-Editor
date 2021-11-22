@@ -3,6 +3,8 @@
         name:'Main'
     Secondary_window:
         name:'Secondary'
+    Imagetopdf_screen:
+        name:'img2pdf'
 
 <Main_window>:
     BoxLayout:
@@ -10,10 +12,22 @@
         Label:
             id: heading
             text: 'PDF Editor'
-        Button:
-            text:'Pdf Merge'
-            on_press: root.manager.current = 'Secondary'
-            id: merge_button
+        GridLayout:
+            cols:3
+            rows:1
+            Button:
+                text:'Pdf Merge'
+                on_press: root.manager.current = 'Secondary'
+                id: merge_button
+            Button:
+                text:'Pdf Page extract'
+                on_press: root.manager.current = 'Secondary'
+                id: merge_button
+            Button:
+                text:'Convert image to pdf'
+                on_press: root.manager.current = 'Secondary'
+                id: merge_button
+        
 
 
 <Secondary_window>:
@@ -62,7 +76,20 @@
             text: 'An error occured'
         Button:
             text: "Cancel"
-            on_release: root.cancel()   
+            on_release: root.cancel()
+
+<CompletedDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        Image:
+            source: 'completed.png'
+            size: self.texture_size
+
+        Button:
+            text: "Close"
+            on_release: root.cancel()    
 
 <LoadDialog>:
     BoxLayout:
