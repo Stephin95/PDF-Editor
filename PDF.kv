@@ -4,7 +4,11 @@
     Secondary_window:
         name:'Secondary'
     Imagetopdf_screen:
-        name:'img2pdf'
+        name:'Img_t_pdf'
+    MergePDF_screen:
+        name:'MergePdf'
+
+
 
 <Main_window>:
     BoxLayout:
@@ -17,7 +21,7 @@
             rows:1
             Button:
                 text:'Pdf Merge'
-                on_press: root.manager.current = 'Secondary'
+                on_press: root.manager.current = 'MergePdf'
                 id: merge_button
             Button:
                 text:'Pdf Page extract'
@@ -25,19 +29,26 @@
                 id: merge_button
             Button:
                 text:'Convert image to pdf'
-                on_press: root.manager.current = 'Secondary'
-                id: merge_button
+                on_press: root.manager.current = 'Img_t_pdf'
+                id: convert_button
         
 
 
 <Secondary_window>:
+    heading_label: heading_label
     description_label: description_label
     selection_label : selection_label
     BoxLayout:
         orientation: 'vertical'
-        Label:
-            id: heading
-            text: 'Merge PDFS'
+        GridLayout:
+            cols: 2
+            Label:
+                id: heading_label
+                text: 'Merge PDFS'
+            Button:
+                text:'back'
+                on_press: root.manager.current = 'Main'
+
         BoxLayout:
             Label:
                 text: 'Files Selected : -'
@@ -63,7 +74,10 @@
                 id: save_but
                 on_press:root.show_save()
             
-                
+            
+<MergePDF_screen>:
+<Imagetopdf_screen>:
+
              
 <ErrorDialog>:
     error_label: error_label

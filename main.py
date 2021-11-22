@@ -24,6 +24,7 @@ from kivy.properties import ObjectProperty
 from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
 from pdf_E import PdfEditor
+from kivy.clock import Clock
 
 class Screen_manager(ScreenManager):
     pass
@@ -37,8 +38,12 @@ class Secondary_window(Screen):
     # loadfile = ObjectProperty(None)
     # savefile = ObjectProperty(None)
     # text_input = ObjectProperty(None)
+    heading_label = ObjectProperty()
     description_label = ObjectProperty()
     selection_label = ObjectProperty()
+    print(heading_label)
+    print(description_label)
+    print(selection_label)
 
     def show_error(self,errormsg="Error occured"):
         content= ErrorDialog(cancel=self.dismiss_popup)
@@ -82,14 +87,17 @@ class Secondary_window(Screen):
         
         # path=Path(path)
         print(path)
-        path_list=self.selection_label.text.split('\n')
-        print(path_list)
-        path_lib_path= list(map(Path,path_list))
-        print('splitted path', )
-        p= PdfEditor(path_list=path_lib_path)
-        p.pdf_merge(savepath=path)
-        self.dismiss_popup()
-        self.show_completed()
+        self.final(path)
+    def final(self):
+        pass
+        # path_list=self.selection_label.text.split('\n')
+        # print(path_list)
+        # path_lib_path= list(map(Path,path_list))
+        # print('splitted path', )
+        # p= PdfEditor(path_list=path_lib_path)
+        # p.pdf_merge(savepath=path)
+        # self.dismiss_popup()
+        # self.show_completed()
 
 
         # print(os.path.join(path, filename))
@@ -124,7 +132,36 @@ class ErrorDialog(FloatLayout):
     cancel = ObjectProperty(None)
 
 class Imagetopdf_screen(Secondary_window):
-    pass
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        Clock.schedule_once(self.initiation)
+        
+    def initiation(self,nw):
+        self.heading_label.text='Convert Image to Pdf'
+        self.description_label.text='Please select the image file'
+
+class MergePDF_screen(Secondary_window):
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        Clock.schedule_once(self.initiation)
+        
+    def initiation(self,nw):
+        self.heading_label.text='Merge Pdf'
+        self.description_label.text='Please select the pdf file'
+
+    def final(self,path):
+        path_list=self.selection_label.text.split('\n')
+        print(path_list)
+        path_lib_path= list(map(Path,path_list))
+        print('splitted path', )
+        p= PdfEditor(path_list=path_lib_path)
+        p.pdf_merge(savepath=path)
+        self.dismiss_popup()
+        self.show_completed()
+
+    
+
+   
 
 
 class PDFApp(App):
