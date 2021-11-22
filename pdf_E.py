@@ -58,7 +58,7 @@ class PdfEditor:
         self.write_pdf(finalpdf_obj=pdf_writer,file_name=str(f.name)+'final'+str(count)+'.pdf')
         count=count+1
 
-    def imgtopdf(self):
+    def imgtopdf(self,savepath=''):
         image_list=[]
         for f in self.path_list:
             inputFile = Image.open(str(f))
@@ -66,7 +66,7 @@ class PdfEditor:
             image_list.append(ImageB)
         first_pg=image_list[0]
         image_list.pop(0)
-        first_pg.save('image.pdf',save_all=True,append_images=image_list)
+        first_pg.save(savepath+'\converted_image.pdf',save_all=True,append_images=image_list)
         return True
             
         

@@ -140,6 +140,16 @@ class Imagetopdf_screen(Secondary_window):
         self.heading_label.text='Convert Image to Pdf'
         self.description_label.text='Please select the image file'
 
+    def final(self,path):
+        path_list=self.selection_label.text.split('\n')
+        print(path_list)
+        path_lib_path= list(map(Path,path_list))
+        print('splitted path', )
+        p= PdfEditor(path_list=path_lib_path)
+        p.imgtopdf(savepath=path)
+        self.dismiss_popup()
+        self.show_completed()
+
 class MergePDF_screen(Secondary_window):
     def __init__(self, **kw):
         super().__init__(**kw)
@@ -147,7 +157,7 @@ class MergePDF_screen(Secondary_window):
         
     def initiation(self,nw):
         self.heading_label.text='Merge Pdf'
-        self.description_label.text='Please select the pdf file'
+        self.description_label.text='Please select the files that need to be merged'
 
     def final(self,path):
         path_list=self.selection_label.text.split('\n')
