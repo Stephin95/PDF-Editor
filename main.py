@@ -14,7 +14,7 @@ contains a root Widget.
 # import kivy
 import os
 from kivy.app import App
-from kivy.uix.gridlayout import GridLayout
+# from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty
@@ -22,7 +22,6 @@ from kivy.properties import ObjectProperty
 # from kivy.factory import Factory
 from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
-from kivy.properties import StringProperty
 
 
 class Screen_manager(ScreenManager):
