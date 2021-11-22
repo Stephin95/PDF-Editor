@@ -17,16 +17,49 @@
 
 
 <Secondary_window>:
-
+    description_label: description_label
+    selection_label : selection_label
     BoxLayout:
         orientation: 'vertical'
         Label:
             id: heading
             text: 'Merge PDFS'
-        Button:
-            text:'Load files'
-            id: load_but
-            on_press:root.show_load()
+        BoxLayout:
+            Label:
+                text: 'Files Selected : -'
+            Label:
+                id: selection_label
+                text: 'No files loaded'
+        GridLayout:
+            cols: 2
+            rows: 2
+            Label:
+                id: description_label
+                text: 'Please select the files that need to be merged'
+            Button:
+                text:'Load files'
+                id: load_but
+                on_press:root.show_load()
+
+            Label:
+                id: Save_me_label
+                text: 'Please select the save location'
+            Button:
+                text:'Save'
+                id: save_but
+                on_press:root.show_save()
+            
+                
+             
+<ErrorDialog>:
+    error_label: error_label
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        Label:
+            id: error_label
+            text: 'An error occured'     
 
 <LoadDialog>:
     BoxLayout:
@@ -72,4 +105,4 @@
 
             Button:
                 text: "Save"
-                on_release: root.save(filechooser.path, text_input.text)
+                on_release: root.save(filechooser.path)
