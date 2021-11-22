@@ -1,3 +1,4 @@
+#:kivy 2.0.0
 <Screen_manager>:
     Main_window:
         name:'Main'
@@ -41,6 +42,8 @@
     description_label: description_label
     selection_label : selection_label
     headgrid: headgrid
+    rootBox:rootBox
+    innerBOX:innerBOX
     BoxLayout:
         orientation: 'vertical'
         id:rootBox
@@ -55,6 +58,7 @@
                 on_press: root.manager.current = 'Main'
 
         BoxLayout:
+            id:innerBOX
             Label:
                 text: 'Files Selected : -'
             Label:
@@ -117,12 +121,14 @@
             on_release: root.cancel()    
 
 <LoadDialog>:
+    filechooser:filechooser
     BoxLayout:
         size: root.size
         pos: root.pos
         orientation: "vertical"
         FileChooserListView:
             id: filechooser
+            path: app.file_path
 
         BoxLayout:
             size_hint_y: None
@@ -136,6 +142,7 @@
                 on_release: root.load(filechooser.path, filechooser.selection)
 
 <SaveDialog>:
+	filechooser:filechooser
     text_input: text_input
     BoxLayout:
         size: root.size
@@ -143,6 +150,7 @@
         orientation: "vertical"
         FileChooserListView:
             id: filechooser
+            path: app.file_path
             on_selection: text_input.text = self.selection and self.selection[0] or ''
 
         TextInput:

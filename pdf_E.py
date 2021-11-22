@@ -42,20 +42,23 @@ class PdfEditor:
         #     print('all the pdf files merged')
         #     pdf_merger.write(output_file)
 
-    def extract_page(self,page_nos=[1],range=1):
+    def extract_page(self,page_nos=[1],range=1,savepath=''):
         pdf_writer = PdfFileWriter()
         count=0
         for f in self.path_list:
             input_pdf = PdfFileReader(str(f))
             if range:
-                extracted_page=input_pdf.pages[page_nos[0],page_nos[1]]
-                pdf_writer.addPage(extracted_page)
+                print('page 0 and page 1 are',page_nos[0],page_nos[1])
+                extracted_page=input_pdf.pages[page_nos[0]:page_nos[1]]
+                for xtract in extracted_page:
+                    pdf_writer.addPage(xtract)
             else:
                 for pg in page_nos:
                     print(f'extracted {count+1} no. of pages')
                     extracted_page = input_pdf.getPage(pg)
                     pdf_writer.addPage(extracted_page)
-        self.write_pdf(finalpdf_obj=pdf_writer,file_name=str(f.name)+'final'+str(count)+'.pdf')
+        savepath=savepath+'\\'+str(f.name)
+        self.write_pdf(finalpdf_obj=pdf_writer,file_name=savepath+str(count)+'.pdf')
         count=count+1
 
     def imgtopdf(self,savepath=''):
