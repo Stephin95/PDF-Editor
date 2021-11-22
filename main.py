@@ -90,21 +90,6 @@ class Secondary_window(Screen):
         self.final(path)
     def final(self):
         pass
-        # path_list=self.selection_label.text.split('\n')
-        # print(path_list)
-        # path_lib_path= list(map(Path,path_list))
-        # print('splitted path', )
-        # p= PdfEditor(path_list=path_lib_path)
-        # p.pdf_merge(savepath=path)
-        # self.dismiss_popup()
-        # self.show_completed()
-
-
-        # print(os.path.join(path, filename))
-        # with open(os.path.join(path, filename), "w") as stream:
-            # stream.write(
-            #     self.text_input.text
-            # )  # considering output file as text for now.
 
         
 
@@ -138,7 +123,7 @@ class Imagetopdf_screen(Secondary_window):
         
     def initiation(self,nw):
         self.heading_label.text='Convert Image to Pdf'
-        self.description_label.text='Please select the image file'
+        self.description_label.text='Please select the images that need to be combined and converted to pdf'
 
     def final(self,path):
         path_list=self.selection_label.text.split('\n')
@@ -156,7 +141,7 @@ class MergePDF_screen(Secondary_window):
         Clock.schedule_once(self.initiation)
         
     def initiation(self,nw):
-        self.heading_label.text='Merge Pdf'
+        self.heading_label.text='Merge Pdfs'
         self.description_label.text='Please select the files that need to be merged'
 
     def final(self,path):
