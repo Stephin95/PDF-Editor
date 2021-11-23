@@ -240,9 +240,9 @@ class PDFApp(App):
 			primary_ext_storage = primary_external_storage_path()
 			file_path=primary_ext_storage
 		elif platform== "linux":
-			file_path='/home/'
+			file_path="/home/"
 		elif platform=="win":
-			file_path='C:\\Users\\steph\\'
+			file_path="C:\\Users\\steph\\"
 		print(file_path,'This is the current path')
 		return Screen_manager()
 
