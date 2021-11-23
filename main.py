@@ -96,14 +96,14 @@ class CompletedDialog(FloatLayout):
 class LoadDialog(FloatLayout):
 	load = ObjectProperty(None)
 	cancel = ObjectProperty(None)
-	filechooser=ObjectProperty()
+
 
 
 
 class SaveDialog(FloatLayout):
 	save = ObjectProperty(None)
 	cancel = ObjectProperty(None)
-	filechooser = ObjectProperty()
+
 
 
 

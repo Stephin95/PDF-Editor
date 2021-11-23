@@ -121,13 +121,12 @@
             on_release: root.cancel()    
 
 <LoadDialog>:
-    filechooser:filechooser
     BoxLayout:
         size: root.size
         pos: root.pos
         orientation: "vertical"
         FileChooserListView:
-            id: filechooser
+            id: filechooser_l
             path: app.file_path
 
         BoxLayout:
@@ -142,14 +141,13 @@
                 on_release: root.load(filechooser.path, filechooser.selection)
 
 <SaveDialog>:
-	filechooser:filechooser
     text_input: text_input
     BoxLayout:
         size: root.size
         pos: root.pos
         orientation: "vertical"
         FileChooserListView:
-            id: filechooser
+            id: filechooser_save
             path: app.file_path
             on_selection: text_input.text = self.selection and self.selection[0] or ''
 
