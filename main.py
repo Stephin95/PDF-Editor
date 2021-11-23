@@ -234,16 +234,16 @@ class Extract_page_screen(Secondary_window):
 
 class PDFApp(App):
 	file_path = StringProperty('')
+	if platform == "android":
+		from android.storage import primary_external_storage_path
+		primary_ext_storage = primary_external_storage_path()
+		file_path=primary_ext_storage
+	elif platform== "linux":
+		file_path= str(Path.home())
+	elif platform=="win":
+		file_path = str(Path.home())
 	def build(self):
-		if platform == "android":
-			from android.storage import primary_external_storage_path
-			primary_ext_storage = primary_external_storage_path()
-			file_path=primary_ext_storage
-		elif platform== "linux":
-			file_path="/home/"
-		elif platform=="win":
-			file_path="C:\\Users\\steph\\"
-		print(file_path,'This is the current path')
+		print(self.file_path,'This is the current path')
 		return Screen_manager()
 
 
