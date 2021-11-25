@@ -8,20 +8,16 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty,StringProperty
 from kivy.uix.textinput import TextInput
 from kivy.uix.label import Label
-
 from kivy.uix.popup import Popup
 from pdf_E import PdfEditor
 from kivy.clock import Clock
 from kivy.utils import platform
-
 if platform == "android":
 	from android.permissions import request_permissions, Permission
 
 	request_permissions(
 		[Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE]
 	)
-
-	
 
 
 class Screen_manager(ScreenManager):
@@ -75,9 +71,8 @@ class Secondary_window(Screen):
 			self.dismiss_popup()
 
 	def save(self, path):
-
 		# path=Path(path)
-		print(path)
+		print('Folder selected for saving is ',path)
 		self.final(path)
 
 	def final(self):

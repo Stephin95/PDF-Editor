@@ -37,6 +37,7 @@ class PdfEditor:
         savepath=savepath+'\\'+str(f.name)
         self.write_pdf(finalpdf_obj=pdf_merger,file_name=savepath)
         print('Pdfs merged succesfully')
+        print(savepath)
         return True
         # with Path("full_pdf.pdf").open(mode="wb") as output_file:
         #     print('all the pdf files merged')
@@ -59,6 +60,7 @@ class PdfEditor:
                     pdf_writer.addPage(extracted_page)
         savepath=savepath+'\\'+str(f.name)
         self.write_pdf(finalpdf_obj=pdf_writer,file_name=savepath+str(count)+'.pdf')
+        print(savepath+str(count)+'.pdf')
         count=count+1
 
     def imgtopdf(self,savepath=''):
@@ -70,6 +72,7 @@ class PdfEditor:
         first_pg=image_list[0]
         image_list.pop(0)
         first_pg.save(savepath+'\converted_image.pdf',save_all=True,append_images=image_list)
+        print(savepath+'\converted_image.pdf')
         return True
             
         
