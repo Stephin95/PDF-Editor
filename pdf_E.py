@@ -3,6 +3,7 @@ from PyPDF2 import PdfFileMerger
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from PIL import Image
 
+
 class PdfEditor:
     def __init__(self,path_list='') -> None:
         if len(path_list) == 0:
@@ -43,7 +44,7 @@ class PdfEditor:
         #     print('all the pdf files merged')
         #     pdf_merger.write(output_file)
 
-    def extract_page(self,page_nos=[1],range=1,savepath=''):
+    def extract_page(self,page_nos=[1],range=1,savepath='',save=True):
         pdf_writer = PdfFileWriter()
         count=0
         for f in self.path_list:
@@ -59,9 +60,13 @@ class PdfEditor:
                     extracted_page = input_pdf.getPage(pg)
                     pdf_writer.addPage(extracted_page)
         savepath=savepath+'\\'+str(f.name)
-        self.write_pdf(finalpdf_obj=pdf_writer,file_name=savepath+str(count)+'.pdf')
-        print(savepath+str(count)+'.pdf')
+        if save:
+            self.write_pdf(finalpdf_obj=pdf_writer,file_name=savepath+str(count)+'.pdf')
+            print(savepath+str(count)+'.pdf')
+        else:
+            return pdf_writer
         count=count+1
+
 
     def imgtopdf(self,savepath=''):
         image_list=[]
@@ -74,6 +79,15 @@ class PdfEditor:
         first_pg.save(savepath+'\converted_image.pdf',save_all=True,append_images=image_list)
         print(savepath+'\converted_image.pdf')
         return True
+
+    def extract_text(self,page_nos=[1],pg_range=1,savepath=''):
+
+        writer=self.extract_page(page_nos=page_nos,range=pg_range,savepath='',save=False)
+        print('no.of pages are ',type(writer.getNumPages()))
+        for pg in [range(writer.getNumPages())]:
+            print(writer.getPage(pg))
+            
+
             
         
 
@@ -103,7 +117,8 @@ if __name__ == "__main__":
     # if the input is not-integer, just print the list
     except:
         print(my_list)
-        p.extract_page(page_nos=my_list,range=range)
+        # p.extract_page(page_nos=my_list,range=range)
+        p.extract_text(page_nos=my_list,pg_range=range,savepath='')
 
     # Block for extracting page finishes
 

@@ -20,6 +20,7 @@ if platform == "android":
 	)
 
 
+# Builder.load_file("C:\\Users\\steph\\Home\\Python\\Pdf_editor\\pdf.kv")
 class Screen_manager(ScreenManager):
 	pass
 
@@ -235,8 +236,14 @@ class PDFApp(App):
 		file_path=primary_ext_storage
 	elif platform== "linux":
 		file_path= str(Path.home())
+		print('File explorer file path=',file_path)
 	elif platform=="win":
-		file_path = str(Path.home())
+		file_path=Path.home().joinpath('temp_pdf_editor')
+		file_path.mkdir(exist_ok=True)
+		file_path = str(file_path)
+		# file_path = str(Path.home())
+		
+		print('File explorer file path=',file_path)
 	def build(self):
 		print(self.file_path,'This is the current path')
 		return Screen_manager()

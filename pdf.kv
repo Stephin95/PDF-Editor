@@ -24,14 +24,20 @@
             rows:1
             Button:
                 text:'Pdf Merge'
+                text_size: self.width, None
+                height: self.texture_size[1]
                 on_press: root.manager.current = 'MergePdf'
                 id: merge_button
             Button:
                 text:'Pdf Page extract'
+                text_size: self.width, None
+                height: self.texture_size[1]
                 on_press: root.manager.current = 'Extract_page'
                 id: merge_button
             Button:
                 text:'Convert image to pdf'
+                text_size: self.width, None
+                height: self.texture_size[1]
                 on_press: root.manager.current = 'Img_t_pdf'
                 id: convert_button
         
@@ -55,15 +61,22 @@
                 text: ''
             Button:
                 text:'back'
+                size_hint:(.5,None)
                 on_press: root.manager.current = 'Main'
 
         BoxLayout:
             id:innerBOX
             Label:
                 text: 'Files Selected : -'
+                text_size: self.width, None
+                size_hint: 1, None
+                height: self.texture_size[1]
             Label:
                 id: selection_label
                 text: 'No files loaded'
+                text_size: self.width, None
+                size_hint: 1, None
+                height: self.texture_size[1]
         GridLayout:
             cols: 2
             rows: 2
@@ -71,26 +84,27 @@
                 id: description_label
                 text: ''
                 text_size: self.width, None
-                size_hint: 1, None
+                size_hint: 1, .5
                 height: self.texture_size[1]
             Button:
                 text:'Load files'
                 id: load_but
+                size_hint:(.5,None)
                 on_press:root.show_load()
+
 
             Label:
                 id: Save_me_label
                 text: 'Please select the save location'
+                text_size: self.width, None
+                size_hint: 1, .5
+                height: self.texture_size[1]
             Button:
                 text:'Save'
                 id: save_but
+                size_hint:(.5,None)
                 on_press:root.show_save()
             
-            
-<MergePDF_screen>:
-<Imagetopdf_screen>:
-<Extract_page_screen>:
-
             
 
              
@@ -130,18 +144,18 @@
             path: app.file_path
 
         BoxLayout:
-            size_hint_y: None
             height: 30
             Button:
                 text: "Cancel"
                 on_release: root.cancel()
+                size_hint: .8,None
 
             Button:
                 text: "Load"
+                size_hint: .8,None
                 on_release: root.load(filechooser_load.path, filechooser_load.selection)
 
 <SaveDialog>:
-    text_input: text_input
     BoxLayout:
         size: root.size
         pos: root.pos
@@ -151,19 +165,15 @@
             path: app.file_path
             on_selection: text_input.text = self.selection and self.selection[0] or ''
 
-        TextInput:
-            id: text_input
-            size_hint_y: None
-            height: 30
-            multiline: False
-
         BoxLayout:
             size_hint_y: None
             height: 30
             Button:
                 text: "Cancel"
+                size_hint: 1,None
                 on_release: root.cancel()
 
             Button:
                 text: "Save"
+                size_hint: 1,None
                 on_release: root.save(filechooser_save.path)
