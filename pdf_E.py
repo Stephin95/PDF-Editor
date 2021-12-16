@@ -92,6 +92,7 @@ class PdfEditor:
         print("no.of pages are ", type(writer.getNumPages()))
         for pg in [range(writer.getNumPages())]:
             print(writer.getPage(pg))
+        print('Feature not fully implemented')
 
 
 if __name__ == "__main__":

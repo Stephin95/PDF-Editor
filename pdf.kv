@@ -12,6 +12,8 @@
         name:'Extract_page'
     Searchable_pdf_screen:
         name:'Searchable_pdf'
+    Searchable_pdf_screen:
+        name:'Ext_text'
 
 
 
@@ -22,8 +24,8 @@
             id: heading
             text: 'PDF Editor'
         GridLayout:
-            cols:4
-            rows:1
+            cols:2
+            rows:3
             Button:
                 text:'Pdf Merge'
                 text_size: self.width, None
@@ -48,6 +50,12 @@
                 height: self.texture_size[1]
                 on_press: root.manager.current = 'Searchable_pdf'
                 id: searchable_button
+            Button:
+                text:'Extract Text'
+                text_size: self.width, None
+                height: self.texture_size[1]
+                on_press: root.manager.current = 'Ext_text'
+                id: ext_text_button
         
 
 

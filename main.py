@@ -154,6 +154,25 @@ class Searchable_pdf_screen(Secondary_window):
         self.dismiss_popup()
         self.show_completed()
 
+class Ext_text(Secondary_window):
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        Clock.schedule_once(self.initiation)
+
+    def initiation(self, nw):
+        self.heading_label.text = "Extract text from Pdfs"
+        self.description_label.text = "Please select the file to extract text"
+
+    def final(self, path):
+        path_list = self.selection_label.text.split("\n")
+        print(path_list)
+        path_lib_path = list(map(Path, path_list))
+        print("splitted path",)
+        p = PdfEditor(path_list=path_lib_path)
+        p.extract_text(savepath=path)
+        self.dismiss_popup()
+        self.show_completed()
+
 class MergePDF_screen(Secondary_window):
     def __init__(self, **kw):
         super().__init__(**kw)
