@@ -13,6 +13,13 @@ from kivy.uix.popup import Popup
 from pdf_E import PdfEditor
 from kivy.clock import Clock
 from kivy.utils import platform
+# from kivy.lang import Builder
+
+python_script_path = Path(__file__).parents[0]
+
+python_script_path=Path(python_script_path, "pdf.kv")
+
+# Builder.load_file(str(python_script_path))
 
 if platform == "android":
     from android.permissions import request_permissions, Permission
@@ -20,6 +27,8 @@ if platform == "android":
     request_permissions(
         [Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE]
     )
+else:
+	pass
 
 
 # Builder.load_file("C:\\Users\\steph\\Home\\Python\\Pdf_editor\\pdf.kv")
@@ -126,6 +135,24 @@ class Imagetopdf_screen(Secondary_window):
         self.dismiss_popup()
         self.show_completed()
 
+class Searchable_pdf_screen(Secondary_window):
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        Clock.schedule_once(self.initiation)
+
+    def initiation(self, nw):
+        self.heading_label.text = "Searchable Pdf"
+        self.description_label.text = "Please select the files that need to be made searchable"
+
+    def final(self, path):
+        path_list = self.selection_label.text.split("\n")
+        print(path_list)
+        path_lib_path = list(map(Path, path_list))
+        print("splitted path",)
+        p = PdfEditor(path_list=path_lib_path)
+        p.pdf_merge(savepath=path)
+        self.dismiss_popup()
+        self.show_completed()
 
 class MergePDF_screen(Secondary_window):
     def __init__(self, **kw):
@@ -231,8 +258,9 @@ class PDFApp(App):
         file_path = str(Path.home())
         print("File explorer file path=", file_path)
     elif platform == "win":
-        file_path = Path.home().joinpath("temp_pdf_editor")
-        file_path.mkdir(exist_ok=True)
+        # file_path = Path.home().joinpath("temp_pdf_editor")
+        # file_path.mkdir(exist_ok=True)
+        file_path=Path.home()
         file_path = str(file_path)
         # file_path = str(Path.home())
 
@@ -241,7 +269,6 @@ class PDFApp(App):
     def build(self):
         print(self.file_path, "This is the current path")
         return Screen_manager()
-
 
 if __name__ == "__main__":
     PDFApp().run()

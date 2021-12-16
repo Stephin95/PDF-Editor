@@ -37,10 +37,10 @@ class PdfEditor:
         pdf_merger = PdfFileMerger()
         for f in self.path_list:
             pdf_merger.append(str(f))
-        savepath = savepath + "\\" + str(f.name)
-        self.write_pdf(finalpdf_obj=pdf_merger, file_name=savepath)
+        final_path = Path(savepath, "merged.pdf")
+        self.write_pdf(finalpdf_obj=pdf_merger, file_name=final_path)
         print("Pdfs merged succesfully")
-        print(savepath)
+        print(final_path)
         return True
         # with Path("full_pdf.pdf").open(mode="wb") as output_file:
         #     print('all the pdf files merged')
@@ -61,7 +61,7 @@ class PdfEditor:
                     print(f"extracted {count+1} no. of pages")
                     extracted_page = input_pdf.getPage(pg)
                     pdf_writer.addPage(extracted_page)
-        final_path = Path(savepath, f"{str(f.name)}{str(count)}_backup.pdf")
+        final_path = Path(savepath, f"{str(count)}_{str(f.name)}")
         self.write_pdf(finalpdf_obj=pdf_writer, file_name=final_path)
         # savepath=savepath+'\\'+str(f.name)
         # self.write_pdf(finalpdf_obj=pdf_writer,file_name=savepath+str(count)+'.pdf')
@@ -77,7 +77,7 @@ class PdfEditor:
             image_list.append(ImageB)
         first_pg = image_list[0]
         image_list.pop(0)
-        final_path = Path(savepath, "converted_image_backup.pdf")
+        final_path = Path(savepath, "converted_image.pdf")
         first_pg.save(str(final_path), save_all=True, append_images=image_list)
         # first_pg.save(savepath+'\converted_image.pdf',save_all=True,append_images=image_list)
         # print(savepath+'\converted_image.pdf')

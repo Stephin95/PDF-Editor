@@ -10,6 +10,8 @@
         name:'MergePdf'
     Extract_page_screen:
         name:'Extract_page'
+    Searchable_pdf_screen:
+        name:'Searchable_pdf'
 
 
 
@@ -20,7 +22,7 @@
             id: heading
             text: 'PDF Editor'
         GridLayout:
-            cols:3
+            cols:4
             rows:1
             Button:
                 text:'Pdf Merge'
@@ -40,6 +42,12 @@
                 height: self.texture_size[1]
                 on_press: root.manager.current = 'Img_t_pdf'
                 id: convert_button
+            Button:
+                text:'Make searchable pdf'
+                text_size: self.width, None
+                height: self.texture_size[1]
+                on_press: root.manager.current = 'Searchable_pdf'
+                id: searchable_button
         
 
 
