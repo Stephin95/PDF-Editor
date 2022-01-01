@@ -88,7 +88,8 @@ class PdfEditor:
         image_list.pop(0)
         if platform == "android":
             from android.storage import primary_external_storage_path
-            savepath = Path( primary_external_storage_path(),'/Pdf Editor',"converted_image.pdf")
+            savepath = Path( primary_external_storage_path(),'/Pdf Editor')
+            savepath.mkdir(parents=True, exist_ok=True)
         final_path = Path(savepath, "converted_image.pdf")
         first_pg.save(str(final_path), save_all=True, append_images=image_list)
         # first_pg.save(savepath+'\converted_image.pdf',save_all=True,append_images=image_list)
