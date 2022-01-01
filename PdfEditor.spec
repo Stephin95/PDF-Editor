@@ -1,4 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
+from kivy_deps import sdl2, glew
 
 
 block_cipher = None
@@ -8,7 +9,7 @@ a = Analysis(['main.py'],
              pathex=[],
              binaries=[],
              datas=[],
-             hiddenimports=[],
+             hiddenimports=['win32timezone'],
              hookspath=[],
              hooksconfig={},
              runtime_hooks=[],
@@ -35,9 +36,11 @@ exe = EXE(pyz,
           codesign_identity=None,
           entitlements_file=None )
 coll = COLLECT(exe,
+Tree('C:\\Users\\steph\\Home\\Python\\Pdf_editor\\'),
                a.binaries,
                a.zipfiles,
                a.datas, 
+               *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],
                strip=False,
                upx=True,
                upx_exclude=[],
