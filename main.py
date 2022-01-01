@@ -24,9 +24,11 @@ python_script_path=Path(python_script_path, "pdf.kv")
 if platform == "android":
     from android.permissions import request_permissions, Permission
 
-    request_permissions(
-        [Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE,Permission.MANAGE_EXTERNAL_STORAGE]
-    )
+    # request_permissions(
+    #     [Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE,Permission.MANAGE_EXTERNAL_STORAGE]
+    # )
+    request_permissions([Permission.MANAGE_EXTERNAL_STORAGE])
+
 else:
 	pass
 
