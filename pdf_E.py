@@ -2,7 +2,8 @@ from pathlib import Path
 from PyPDF2 import PdfFileMerger
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from PIL import Image
-
+from kivy.utils import platform
+from pathlib import Path
 
 class PdfEditor:
     def __init__(self, path_list="") -> None:
@@ -29,7 +30,12 @@ class PdfEditor:
         print("Files loaded successfully")
 
     def write_pdf(self, finalpdf_obj, file_name="sample.pdf"):
-        with Path(file_name).open(mode="wb") as output_file:
+        if platform == "android":
+            from android.storage import primary_external_storage_path
+            file_name = Path( primary_external_storage_path(),'/Pdf Editor',file_name)
+        # else:
+        #     file_name=Path(file_name)
+        with file_name.open(mode="wb") as output_file:
             finalpdf_obj.write(output_file)
 
     def pdf_merge(self, savepath=""):
@@ -37,7 +43,10 @@ class PdfEditor:
         pdf_merger = PdfFileMerger()
         for f in self.path_list:
             pdf_merger.append(str(f))
-        final_path = Path(savepath, "merged.pdf")
+        if platform == "android":
+            final_path="merged.pdf"
+        else:
+            final_path = Path(savepath, "merged.pdf")
         self.write_pdf(finalpdf_obj=pdf_merger, file_name=final_path)
         print("Pdfs merged succesfully")
         print(final_path)
@@ -61,11 +70,11 @@ class PdfEditor:
                     print(f"extracted {count+1} no. of pages")
                     extracted_page = input_pdf.getPage(pg)
                     pdf_writer.addPage(extracted_page)
-        final_path = Path(savepath, f"{str(count)}_{str(f.name)}")
+        if platform == "android":
+            final_path=f"{str(count)}_{str(f.name)}"
+        else:
+            final_path = Path(savepath, f"{str(count)}_{str(f.name)}")
         self.write_pdf(finalpdf_obj=pdf_writer, file_name=final_path)
-        # savepath=savepath+'\\'+str(f.name)
-        # self.write_pdf(finalpdf_obj=pdf_writer,file_name=savepath+str(count)+'.pdf')
-        # print(savepath+str(count)+'.pdf')
         print(final_path)
         count = count + 1
 
@@ -77,7 +86,11 @@ class PdfEditor:
             image_list.append(ImageB)
         first_pg = image_list[0]
         image_list.pop(0)
-        final_path = Path(savepath, "converted_image.pdf")
+        if platform == "android":
+            from android.storage import primary_external_storage_path
+            savepath = Path( primary_external_storage_path(),'/Pdf Editor',"converted_image.pdf")
+        else:
+            final_path = Path(savepath, "converted_image.pdf")
         first_pg.save(str(final_path), save_all=True, append_images=image_list)
         # first_pg.save(savepath+'\converted_image.pdf',save_all=True,append_images=image_list)
         # print(savepath+'\converted_image.pdf')
