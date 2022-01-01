@@ -1,3 +1,4 @@
+from os import path
 from pathlib import Path
 from PyPDF2 import PdfFileMerger
 from PyPDF2 import PdfFileReader, PdfFileWriter
@@ -29,10 +30,12 @@ class PdfEditor:
         print(str(self.path_list))
         print("Files loaded successfully")
 
-    def write_pdf(self, finalpdf_obj, file_name="sample.pdf"):
+    def write_pdf(self, finalpdf_obj, file_name=Path(Path.home(),"sample.pdf")):
         if platform == "android":
             from android.storage import primary_external_storage_path
-            file_name = Path( primary_external_storage_path(),'/Pdf Editor',file_name)
+            save_path=Path(primary_external_storage_path(),'/Pdf Editor')
+            save_path.mkdir(parents=True, exist_ok=True)
+            file_name = Path(save_path,file_name)
         # else:
         #     file_name=Path(file_name)
         with file_name.open(mode="wb") as output_file:
