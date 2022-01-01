@@ -25,7 +25,7 @@ if platform == "android":
     from android.permissions import request_permissions, Permission
 
     request_permissions(
-        [Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE]
+        [Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE,Permission.MANAGE_EXTERNAL_STORAGE]
     )
 else:
 	pass
