@@ -2,7 +2,7 @@
 import os
 from kivy.app import App
 from pathlib import Path
-
+from android import activity
 # from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -27,7 +27,7 @@ if platform == "android":
     # request_permissions(
     #     [Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE,Permission.MANAGE_EXTERNAL_STORAGE]
     # )
-    request_permissions(["android.permission.MANAGE_EXTERNAL_STORAGE"])
+    request_permissions(["android.permission.READ_EXTERNAL_STORAGE","android.permission.MANAGE_EXTERNAL_STORAGE"])
 
 else:
 	pass
