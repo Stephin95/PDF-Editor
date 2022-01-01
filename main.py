@@ -27,7 +27,7 @@ if platform == "android":
     # request_permissions(
     #     [Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE,Permission.MANAGE_EXTERNAL_STORAGE]
     # )
-    request_permissions([Permission.MANAGE_EXTERNAL_STORAGE])
+    request_permissions(["android.permission.MANAGE_EXTERNAL_STORAGE"])
 
 else:
 	pass
