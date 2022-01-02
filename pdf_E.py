@@ -33,7 +33,7 @@ class PdfEditor:
     def write_pdf(self, finalpdf_obj, file_name=Path(Path.home(),"sample.pdf")):
         if platform == "android":
             from android.storage import primary_external_storage_path
-            save_path=Path(primary_external_storage_path(),'/Pdf Editor')
+            save_path=Path(primary_external_storage_path(),'/Documents')
             save_path.mkdir(parents=True, exist_ok=True)
             file_name = Path(save_path,file_name)
         # else:
@@ -91,7 +91,7 @@ class PdfEditor:
         image_list.pop(0)
         if platform == "android":
             from android.storage import primary_external_storage_path
-            savepath = Path( primary_external_storage_path(),'/Pdf Editor')
+            savepath = Path( primary_external_storage_path(),'/Documents')
             savepath.mkdir(parents=True, exist_ok=True)
         final_path = Path(savepath, "converted_image.pdf")
         first_pg.save(str(final_path), save_all=True, append_images=image_list)
