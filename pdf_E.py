@@ -31,13 +31,6 @@ class PdfEditor:
         print("Files loaded successfully")
 
     def write_pdf(self, finalpdf_obj, file_name=Path(Path.home(),"sample.pdf")):
-        if platform == "android":
-            from android.storage import primary_external_storage_path
-            save_path=Path(primary_external_storage_path(),'/Documents')
-            save_path.mkdir(parents=True, exist_ok=True)
-            file_name = Path(save_path,file_name)
-        # else:
-        #     file_name=Path(file_name)
         with file_name.open(mode="wb") as output_file:
             finalpdf_obj.write(output_file)
 
@@ -46,17 +39,12 @@ class PdfEditor:
         pdf_merger = PdfFileMerger()
         for f in self.path_list:
             pdf_merger.append(str(f))
-        if platform == "android":
-            final_path="merged.pdf"
-        else:
-            final_path = Path(savepath, "merged.pdf")
+        final_path = Path(savepath, "merged.pdf")
         self.write_pdf(finalpdf_obj=pdf_merger, file_name=final_path)
         print("Pdfs merged succesfully")
         print(final_path)
         return True
-        # with Path("full_pdf.pdf").open(mode="wb") as output_file:
-        #     print('all the pdf files merged')
-        #     pdf_merger.write(output_file)
+
 
     def extract_page(self, page_nos=[1], range=1, savepath=""):
         pdf_writer = PdfFileWriter()
@@ -73,10 +61,7 @@ class PdfEditor:
                     print(f"extracted {count+1} no. of pages")
                     extracted_page = input_pdf.getPage(pg)
                     pdf_writer.addPage(extracted_page)
-        if platform == "android":
-            final_path=f"{str(count)}_{str(f.name)}"
-        else:
-            final_path = Path(savepath, f"{str(count)}_{str(f.name)}")
+        final_path = Path(savepath, f"{str(count)}_{str(f.name)}")
         self.write_pdf(finalpdf_obj=pdf_writer, file_name=final_path)
         print(final_path)
         count = count + 1
@@ -89,14 +74,8 @@ class PdfEditor:
             image_list.append(ImageB)
         first_pg = image_list[0]
         image_list.pop(0)
-        if platform == "android":
-            from android.storage import primary_external_storage_path
-            savepath = Path( primary_external_storage_path(),'/Documents')
-            savepath.mkdir(parents=True, exist_ok=True)
         final_path = Path(savepath, "converted_image.pdf")
         first_pg.save(str(final_path), save_all=True, append_images=image_list)
-        # first_pg.save(savepath+'\converted_image.pdf',save_all=True,append_images=image_list)
-        # print(savepath+'\converted_image.pdf')
         print(final_path)
         return True
 

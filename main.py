@@ -27,7 +27,23 @@ if platform == "android":
     # request_permissions(
     #     [Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE,Permission.MANAGE_EXTERNAL_STORAGE]
     # )
-    request_permissions(["android.permission.READ_EXTERNAL_STORAGE","android.permission.MANAGE_EXTERNAL_STORAGE"])
+    request_permissions(["android.permission.MANAGE_EXTERNAL_STORAGE"])
+    from jnius import autoclass
+
+    # We need a reference to the Java activity running the current
+    # application, this reference is stored automatically by
+    # Kivy's PythonActivity bootstrap
+
+    # This one works with SDL2
+    PythonActivity = autoclass('org.kivy.android.PythonActivity')
+
+    activity = PythonActivity.mActivity
+
+    Context = autoclass('android.content.Context')
+    vibrator = activity.getSystemService(Context.VIBRATOR_SERVICE)
+
+    # vibrator.vibrate(10000)  # the argument is in milliseconds
+
 
 else:
 	pass
