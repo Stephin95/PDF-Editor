@@ -63,7 +63,7 @@ if platform == "android":
         elif permission_status==-1:
             return False
 
-    if not check_permission(permission="android.permission.MANAGE_EXTERNAL_STORAGE",context=activity):
+    if not check_permission(permission="android.permission.MANAGE_EXTERNAL_STORAGE",context=activity) and True:#Issue with permissions so ignoring for now
         # create the intent
         intent = Intent()
         intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
