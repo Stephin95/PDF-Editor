@@ -94,7 +94,7 @@ fullscreen = 0
 # (list) Permissions
 #android.permissions = INTERNET
 #android.permissions = READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,
-android.permissions = MANAGE_EXTERNAL_STORAGE
+android.permissions = MANAGE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE
 
 
 # (list) features (adds uses-feature -tags to manifest)
@@ -183,12 +183,12 @@ android.api = 30
 #android.add_aars =
 
 # (list) Gradle dependencies to add
-#android.gradle_dependencies =
+android.gradle_dependencies = 'androidx.appcompat:appcompat:1.2.0'
 
 # (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies'
 # contains an 'androidx' package, or any package from Kotlin source.
 # android.enable_androidx requires android.api >= 28
-#android.enable_androidx = False
+android.enable_androidx = True
 
 # (list) add java compile options
 # this can for example be necessary when importing certain java libraries using the 'android.gradle_dependencies' option

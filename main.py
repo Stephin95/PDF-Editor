@@ -13,6 +13,7 @@ from kivy.uix.popup import Popup
 from pdf_E import PdfEditor
 from kivy.clock import Clock
 from kivy.utils import platform
+from kivy.logger import Logger
 # from kivy.lang import Builder
 
 python_script_path = Path(__file__).parents[0]
@@ -22,13 +23,22 @@ python_script_path=Path(python_script_path, "pdf.kv")
 # Builder.load_file(str(python_script_path))
 
 if platform == "android":
-    from android.permissions import request_permissions, Permission
+    Logger.info("Platform is android")
+    from android.permissions import request_permissions, Permission,check_permission
 
     # request_permissions(
     #     [Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE,Permission.MANAGE_EXTERNAL_STORAGE]
     # )
     request_permissions(["android.permission.MANAGE_EXTERNAL_STORAGE"])
+    Logger.info("QQQ Checking if manage external storage permission is given ")
+    Logger.warning(check_permission("android.permission.MANAGE_EXTERNAL_STORAGE"))
+    Logger.warning(check_permission("Permission.WRITE_EXTERNAL_STORAGE"))
+    Logger.warning(f"checking the check_permissions to be implemented")
+
+
+    
     from jnius import autoclass
+    from jnius import cast
 
     # We need a reference to the Java activity running the current
     # application, this reference is stored automatically by
@@ -39,10 +49,35 @@ if platform == "android":
 
     activity = PythonActivity.mActivity
 
+    # ContextCompat = autoclass('android.support.v4.content.ContextCompat')
+    ContextCompat = autoclass('androidx.core.content.ContextCompat')
+    Intent = autoclass('android.content.Intent')
+    Settings = autoclass('android.provider.Settings')
     Context = autoclass('android.content.Context')
-    vibrator = activity.getSystemService(Context.VIBRATOR_SERVICE)
 
-    # vibrator.vibrate(10000)  # the argument is in milliseconds
+
+    def check_permission(permission, context = activity):
+        permission_status = ContextCompat.checkSelfPermission(context,permission)
+        if permission_status==0:
+            return True
+        elif permission_status==-1:
+            return False
+
+    if not check_permission(permission="android.permission.MANAGE_EXTERNAL_STORAGE",context=activity):
+        # create the intent
+        intent = Intent()
+        intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+
+
+        # PythonActivity.mActivity is the instance of the current Activity
+        # BUT, startActivity is a method from the Activity class, not from our
+        # PythonActivity.
+        # We need to cast our class into an activity and use it
+        currentActivity = cast('android.app.Activity', PythonActivity.mActivity)
+        currentActivity.startActivity(intent)
+        # print(Compat.checkSelfPermission(currentActivity, "android.permission.MANAGE_EXTERNAL_STORAGE"))
+
+
 
 
 else:
