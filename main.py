@@ -2,7 +2,6 @@
 import os
 from kivy.app import App
 from pathlib import Path
-from android import activity
 # from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -23,6 +22,7 @@ python_script_path=Path(python_script_path, "pdf.kv")
 # Builder.load_file(str(python_script_path))
 
 if platform == "android":
+    from android import activity
     Logger.info("Platform is android")
     from android.permissions import request_permissions, Permission,check_permission
 
