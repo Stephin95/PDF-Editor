@@ -123,8 +123,17 @@ class Secondary_window(Screen):
 
     def load(self, path, filename, auto_close=False):
         if not filename:
-            print("please select a valid file")
-            self.show_error(errormsg="file not found")
+            print("Folder Selected")
+            for path in Path(str(path)).iterdir():
+                if path.is_file():
+                    if path.suffix=='.pdf'or path.suffix=='.jpg'or path.suffix=='.png':
+                        if self.selection_label.text == "No files loaded":
+                            self.selection_label.text = str(path)
+                        else:
+                            self.selection_label.text = self.selection_label.text + "\n" + str(path)
+                        print(path)
+
+            # self.show_error(errormsg="file not found")
             return 0
         file_path = os.path.join(path, filename[0])
         print(file_path)
