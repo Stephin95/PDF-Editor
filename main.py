@@ -175,6 +175,22 @@ class SaveDialog(FloatLayout):
 class ErrorDialog(FloatLayout):
     cancel = ObjectProperty(None)
 
+class MergePDF_screen(Secondary_window):
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        Clock.schedule_once(self.initiation)
+
+    def initiation(self, nw):
+        self.heading_label.text = "Merge Pdfs"
+        self.description_label.text = "Please select the files that need to be merged"
+
+    def final(self, path):
+        path_list = self.selection_label.text.split("\n")
+        print(path_list)
+        path_lib_path = list(map(Path, path_list))
+        print("splitted path",)
+        p = PdfEditor(path_list=path_lib_path)
+        p.pdf_merge(savepath=path)
 
 class Imagetopdf_screen(Secondary_window):
     def __init__(self, **kw):
@@ -216,41 +232,76 @@ class Searchable_pdf_screen(Secondary_window):
         self.dismiss_popup()
         self.show_completed()
 
-class Ext_text(Secondary_window):
+class Extract_text_screen(Secondary_window):
     def __init__(self, **kw):
         super().__init__(**kw)
+        self.input1 = ObjectProperty()
         Clock.schedule_once(self.initiation)
+        self.my_list = ""
 
-    def initiation(self, nw):
-        self.heading_label.text = "Extract text from Pdfs"
-        self.description_label.text = "Please select the file to extract text"
+    def initiation(self):
+        self.heading_label.text = "Extract text from pdf"
+        self.description_label.text = "Please select the pdfs"
+        self.range_input = False
+        label_pg_start = Label(
+            text="Enter the page no.s to extract seperated by commas below for range extract enter the first page only"
+        )
+        label_pg_start.text_size = label_pg_start.size
+        self.headgrid.add_widget(label_pg_start)
+        label_pg_end = Label(
+            text="for a range extract enter the final page no. Leave blank if you are not doing a range extract"
+        )
+        label_pg_end.text_size = label_pg_end.size
+        self.headgrid.add_widget(label_pg_end)
+        self.start_page = TextInput(hint_text="start", multiline=False)
+        self.start_page.bind(text=self.check_button)
+        final_page = TextInput(hint_text="end", multiline=False)
+        final_page.bind(text=self.check_button)
+        self.headgrid.add_widget(self.start_page)
+        self.headgrid.add_widget(final_page)
+        self.ids.save_but.disabled = True
+
+    def check_button(self, *args):
+        if args[0] == self.start_page:
+            self.first_page = args[1]
+            self.ids.save_but.disabled = False
+        else:
+            self.final_page = args[1]
 
     def final(self, path):
+        print("started final class")
+        if self.first_page:
+            try:
+                if self.final_page:
+                    self.my_list = [int(self.first_page) - 1, int(self.final_page) - 1]
+                    print(self.my_list)
+                    print(type(self.my_list[0]))
+                    self.range_input = True
+            except Exception as e:
+                print(e)
+                print(
+                    "Doing single page extract - if it is an error please check the try and catch statement"
+                )
+                page_list = self.first_page.split(",")
+                print(page_list)
+                # self.my_list = list(map(int, page_list))
+                self.my_list = [int(el) - 1 for el in page_list]
+                print(type(self.my_list))
+                self.range_input = False
+
+        else:
+            print("Please enter the start page no. to extract")
+
+        print("starting page extraction")
+        print(self.my_list)
+        print(self.range_input)
         path_list = self.selection_label.text.split("\n")
         print(path_list)
         path_lib_path = list(map(Path, path_list))
         print("splitted path",)
         p = PdfEditor(path_list=path_lib_path)
-        p.extract_text(savepath=path)
-        self.dismiss_popup()
-        self.show_completed()
-
-class MergePDF_screen(Secondary_window):
-    def __init__(self, **kw):
-        super().__init__(**kw)
-        Clock.schedule_once(self.initiation)
-
-    def initiation(self, nw):
-        self.heading_label.text = "Merge Pdfs"
-        self.description_label.text = "Please select the files that need to be merged"
-
-    def final(self, path):
-        path_list = self.selection_label.text.split("\n")
-        print(path_list)
-        path_lib_path = list(map(Path, path_list))
-        print("splitted path",)
-        p = PdfEditor(path_list=path_lib_path)
-        p.pdf_merge(savepath=path)
+        p.extract_text(page_nos=self.my_list, pg_range=self.range_input,savepath=path)
+        p.extract_page(page_nos=self.my_list, pg_range=self.range_input, savepath=path)
         self.dismiss_popup()
         self.show_completed()
 
@@ -323,7 +374,7 @@ class Extract_page_screen(Secondary_window):
         path_lib_path = list(map(Path, path_list))
         print("splitted path",)
         p = PdfEditor(path_list=path_lib_path)
-        p.extract_page(page_nos=self.my_list, range=self.range_input, savepath=path)
+        p.extract_page(page_nos=self.my_list, pg_range=self.range_input, savepath=path)
         self.dismiss_popup()
         self.show_completed()
 
