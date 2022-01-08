@@ -239,7 +239,7 @@ class Extract_text_screen(Secondary_window):
         Clock.schedule_once(self.initiation)
         self.my_list = ""
 
-    def initiation(self):
+    def initiation(self,nw):
         self.heading_label.text = "Extract text from pdf"
         self.description_label.text = "Please select the pdfs"
         self.range_input = False
