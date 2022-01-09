@@ -2,7 +2,7 @@
 import os
 from kivy.app import App
 from pathlib import Path
-# from kivy.uix.gridlayout import GridLayout
+
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty, StringProperty
@@ -13,13 +13,12 @@ from pdf_E import PdfEditor
 from kivy.clock import Clock
 from kivy.utils import platform
 from kivy.logger import Logger
-# from kivy.lang import Builder
+
 
 python_script_path = Path(__file__).parents[0]
 
 python_script_path=Path(python_script_path, "pdf.kv")
 
-# Builder.load_file(str(python_script_path))
 
 if platform == "android":
     from android import activity
@@ -259,6 +258,7 @@ class Extract_text_screen(Secondary_window):
         final_page.bind(text=self.check_button)
         self.headgrid.add_widget(self.start_page)
         self.headgrid.add_widget(final_page)
+        # self.ids.save_but.disabled = True
         self.ids.save_but.disabled = True
 
     def check_button(self, *args):
@@ -383,7 +383,6 @@ class PDFApp(App):
     file_path = StringProperty("")
     if platform == "android":
         from android.storage import primary_external_storage_path
-
         primary_ext_storage = primary_external_storage_path()
         file_path = primary_ext_storage
     elif platform == "linux":

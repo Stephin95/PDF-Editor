@@ -1,3 +1,4 @@
+# python -m PyInstaller  .\PdfEditor.spec
 # from os import path
 from pathlib import Path
 from PyPDF2 import PdfFileMerger
@@ -39,7 +40,6 @@ class PdfEditor:
 			output_file.write(file_content)
 
 	def pdf_merge(self, savepath=""):
-
 		pdf_merger = PdfFileMerger()
 		for f in self.path_list:
 			pdf_merger.append(str(f))
@@ -87,7 +87,6 @@ class PdfEditor:
 		return True
 
 	def extract_text(self, page_nos=[1], pg_range=1, savepath=""):
-
 		writer = self.extract_page(
 			page_nos=page_nos, pg_range=pg_range, savepath="", save=False
 		)
