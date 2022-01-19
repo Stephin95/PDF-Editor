@@ -6,6 +6,7 @@ from PyPDF2 import PdfFileReader, PdfFileWriter
 from PIL import Image
 # from kivy.utils import platform
 from pathlib import Path
+from time import sleep
 
 class PdfEditor:
 	def __init__(self, path_list="") -> None:
@@ -42,7 +43,13 @@ class PdfEditor:
 	def pdf_merge(self, savepath=""):
 		pdf_merger = PdfFileMerger()
 		for f in self.path_list:
-			pdf_merger.append(str(f))
+			if not f:
+				print("Destination unknown")
+				sleep(10)
+			try:
+				pdf_merger.append(str(f))
+			except Exception as e:
+				print(f"Error reading {str(f)}")
 		final_path = Path(savepath, "merged.pdf")
 		self.write_pdf(finalpdf_obj=pdf_merger, file_name=final_path)
 		print("Pdfs merged succesfully")
