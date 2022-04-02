@@ -190,6 +190,8 @@ class MergePDF_screen(Secondary_window):
         print("splitted path",)
         p = PdfEditor(path_list=path_lib_path)
         p.pdf_merge(savepath=path)
+        self.dismiss_popup()
+        self.show_completed()
 
 class Imagetopdf_screen(Secondary_window):
     def __init__(self, **kw):
